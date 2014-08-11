@@ -11,7 +11,7 @@ __credits__ = []
 __license__ = "GNU GPL v2+"
 __version__ = "1.0"
 __maintainer__ = "Meg Ford"
-__email__ = "meg387@gmail.com"
+__email__ = ""
 
 ######################################################################
 
