@@ -116,20 +116,28 @@ class Interface:
             for idx, val in enumerate(input_list): 
                 type_list += [self.check_list_elem_type(idx, val)]
             
-            op = self.check_opposite_corner(idx, val)
-            
-            if  not op:
-                odd = self.odd_squares(type_list)
-                if not odd:
-                    return odd
-            else:
-                even = self.even_squares(type_list)
-                if not even:
-                    return even
+            if len(player1) == 2:
+                op = self.check_opposite_corner(idx, val)
+                ed = self.check_edge(idx, val)
+    
+                if not op:
+                    odd = self.odd_squares(type_list)
+                    if not odd:
+                        return odd
+
+                if not ed:
+                    cor = self.corner_squares(type_list)
+                    if not cor:
+                        return cor
+
+            even = self.even_squares(type_list)
+            if not even:
+                return even
                 
-                odd = self.odd_squares(type_list)
-                if not odd:
-                    return odd                        
+            odd = self.odd_squares(type_list)
+            if not odd:
+                return odd  
+
             return 2
    
     def even_squares(self, type_list):         
@@ -141,8 +149,36 @@ class Interface:
         
     def odd_squares(self, type_list):
         for idx, val in enumerate(type_list):
-            if val[1]:
+            if not val[0] and val[1]:
                 self.adjust_lists(player2, 'o', type_list[idx][3])
+                return 0
+        return 1
+
+    def corner_squares(self, type_list):
+        if player1[0] + player1[1] == 4 and type(input_list[0]) is int:
+            self.adjust_lists(player2, 'o', 0)
+            return 0
+        elif player1[0] + player1[1] == 8 and type(input_list[2]) is int:
+            self.adjust_lists(player2, 'o', 2)
+            return 0
+        elif player1[0] + player1[1] == 12 and type(input_list[6]) is int:
+            self.adjust_lists(player2, 'o', 6)
+            return 0
+        elif player1[0] + player1[1] == 16 and type(input_list[8]) is int:
+            self.adjust_lists(player2, 'o', 8)
+            return 0
+        else:
+            return 1
+
+    def check_opposite_corner(self, idx, val):
+        if player1[0] % 2 == 0 and player1[1] % 2 == 0:
+            if player1[0] + player1[1] == 10:
+                return 0
+        return 1 
+
+    def  check_edge(self, idx, val):
+        if player1[0] % 2 != 0 and player1[1] % 2 != 0:
+            if abs(player1[0] - player1[1]) == 2 or abs(player1[0] - player1[1]) == 6:
                 return 0
         return 1
             
@@ -153,13 +189,6 @@ class Interface:
             return [False, True, val, idx]
         else: 
             return [False, False, val, idx]
-    
-    def check_opposite_corner(self, idx, val):
-        if player1[0] % 2 == 0:
-            if player1[1] % 2 == 0:
-                if player1[0] + player1[1] == 10:
-                    return 0
-        return 1 
    
     def adjust_lists(self, player, x_or_o, move):
         player.append(board[move])
