@@ -16,25 +16,36 @@ __email__ = ""
 ######################################################################
 
 
-class Board():
+class Board(object):
 
     """
     A :class:`Board` object which contains a magic square
     for finding a win and a values list.
     """
 
-    def __init__(self):
-        self.values = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        self.magic_square = [8, 1, 6, 3, 5, 7, 4, 9, 2]
+    def __init__(self, values, magic_square):
+        """
+        Initialize a :class:`Board` object.
+        """
+        self.values = values
+        self.magic_square = magic_square
 
     def add_move(self, move, x_or_o):
-        """Add a :class:`Board[move]` object to the list"""
+        """
+        Add a move to the :class:`Board` object's values.
+        """
         self.values[move] = x_or_o
 
     def remove_value(self, move):
+        """
+        Remove a value from the :class:`Board` object's values.
+        """
         self.magic_square[move] = -1000
 
     def print_board(self):
+        """
+        Print the :class:`Board` object's values.
+        """
         i = 0
         print '\n\n'
         for t in range(0, 3):
@@ -50,6 +61,9 @@ class Board():
         print '\n\n'
 
     def assign_player_input(self):
+        """
+        Ask the user to choose a player.
+        """
         is_valid = 0
         count = 0
         while not is_valid or count == 5:
@@ -63,6 +77,9 @@ class Board():
         return ret
 
     def check_player_input(self, player):
+        """
+        Validate the user's player input.
+        """
         if player == "x" or player == 'o':
             return player
         else:
@@ -70,6 +87,9 @@ class Board():
             return None
 
     def move_input(self):
+        """
+        Ask the user to choose a move.
+        """
         is_valid = 0
         count = 0
         while not is_valid or count == 5:
@@ -80,6 +100,9 @@ class Board():
         return int(move) - 1
 
     def move_type(self, move):
+        """
+        Validate the user's move input.
+        """
         try:
             move = int(move) - 1
         except ValueError:
@@ -96,4 +119,7 @@ class Board():
             return True
 
     def print_winner(self, player):
+        """
+        Print the name of the game's winner.
+        """
         print player + " Wins"
