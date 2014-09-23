@@ -166,7 +166,7 @@ class Game(object):
 
             # Next check for opposing player moves in checkerboard pattern
             # on the edge squares.
-            if not self.check_edge(self.opp_player(player).player):
+            if not self.check_edge(self.opp_player(player)):
                 return self._play
 
         # Move to the first available even square.
@@ -218,12 +218,12 @@ class Game(object):
         If that pattern is found, then the ai player moves
         to a corner square.
         """
-        if player[0] % 2 != 0 and player[1] % 2 != 0:
-            if abs(player[0] - player[1]) == 2 or\
-                    abs(player[0] - player[1]) == 6:
+        if player.player[0] % 2 != 0 and player.player[1] % 2 != 0:
+            if abs(player.player[0] - player.player[1]) == 2 or\
+                    abs(player.player[0] - player.player[1]) == 6:
                 # If that pattern is found, then the ai player moves
                 # to corner square.
-                return self.corner_squares(self.opp_player(player))
+                return self.corner_squares(player)
         return 1
 
     def diagonal(self, player):
@@ -231,7 +231,6 @@ class Game(object):
         Check for an occupied diagonal.
         """
         opp_player = self.opp_player(player).player
-        print player.player[0] + opp_player[0] + opp_player[1]
         if player.player[0] == 5:
             if player.player[0] + opp_player[0] + opp_player[1] == 15:
                 # If a diagonal is filled, then the ai player moves
@@ -245,7 +244,7 @@ class Game(object):
         If that pattern is found, then the ai player looks for
         the correct corner and moves there.
         """
-        opp_player = self.opp_player(player).player
+        opp_player = self.opp_player(player)
         player = player.player
         if player[0] + player[1] == 4 and type(self.board.values[0]) is int:
             self.adjust_lists(opp_player, 0)
