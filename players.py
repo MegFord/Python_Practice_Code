@@ -48,7 +48,6 @@ class Player(object):
                     sum(self.player[lower],
                         self.player[index],
                         self.player[upper])
-                print value
                 if value == 15:
                     return 1
                 elif value < 15:
